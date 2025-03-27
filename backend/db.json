@@ -1,0 +1,137 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Admin User",
+      "email": "admin@example.com",
+      "password": "admin123",
+      "phoneNumber": "1234567890",
+      "role": "admin"
+    },
+    {
+      "id": "2",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "password": "password",
+      "phoneNumber": "9876543210",
+      "role": "user"
+    },
+    {
+      "id": "265d",
+      "name": "siz",
+      "email": "siz@gmail.com",
+      "password": "siz@09",
+      "phoneNumber": "988888888",
+      "role": "user"
+    },
+    {
+      "id": "e902",
+      "name": "siz",
+      "email": "sizmhrzn@gmail.com",
+      "password": "siz@09",
+      "phoneNumber": "9999999999",
+      "role": "user"
+    },
+    {
+      "id": "0ac0",
+      "name": "siz",
+      "email": "sizmhrzn09@gmail.com",
+      "password": "siz@09",
+      "phoneNumber": "9999999999",
+      "role": "user"
+    },
+    {
+      "id": "c1fc",
+      "name": "hello",
+      "email": "heloo@gmail.com",
+      "password": "heloo",
+      "phoneNumber": "hello",
+      "role": "user"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "Laptop",
+      "price": 1200,
+      "quantity": 10,
+      "categoryId": 1
+    },
+    {
+      "id": "2",
+      "name": "Mouse",
+      "price": 25,
+      "quantity": 50,
+      "categoryId": 2
+    },
+    {
+      "id": "afbd",
+      "name": "hello",
+      "sku": "1999",
+      "price": "190000",
+      "stockQuantity": "19",
+      "categoryId": "1",
+      "description": "hello"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Electronics"
+    },
+    {
+      "id": "2",
+      "name": "Accessories"
+    },
+    {
+      "id": "5b9a",
+      "name": "Hello"
+    }
+  ],
+  "suppliers": [
+    {
+      "name": "Tech Supplies Inc.",
+      "contactInfo": "999999999",
+      "address": "lalitpur",
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "name": "Gadget Distributors",
+      "email": "sales@gadgetdist.com",
+      "phoneNumber": "5559876543"
+    },
+    {
+      "id": "deb6",
+      "name": "hello",
+      "contactInfo": "8989898989",
+      "address": "hello"
+    },
+    {
+      "id": "5973",
+      "name": "hello",
+      "contactInfo": "999999999",
+      "address": "hello"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "1",
+      "userId": 2,
+      "type": "purchase",
+      "productId": 1,
+      "quantity": 5,
+      "date": "2025-03-25",
+      "totalPrice": 6000
+    },
+    {
+      "id": "2",
+      "userId": 2,
+      "type": "sale",
+      "productId": 2,
+      "quantity": 3,
+      "date": "2025-03-24",
+      "totalPrice": 75
+    }
+  ]
+}
