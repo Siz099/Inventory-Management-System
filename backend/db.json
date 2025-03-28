@@ -70,15 +70,11 @@
       "sku": "1999",
       "price": "190000",
       "stockQuantity": "19",
-      "categoryId": "1",
+      "categoryId": null,
       "description": "hello"
     }
   ],
   "categories": [
-    {
-      "id": "1",
-      "name": "Electronics"
-    },
     {
       "id": "2",
       "name": "Accessories"
