@@ -37,10 +37,64 @@ class ApiService {
     return user?.role === "admin";
   }
 
+  /** USER MANAGEMENT API */
+  static async getUsers() {
+    try {
+      const response = await axios.get(`${this.BASE_URL}/users`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      throw new Error("Failed to fetch users");
+    }
+  }
+
+  static async getUserById(id) {
+    try {
+      const response = await axios.get(`${this.BASE_URL}/users/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching user by ID:", error);
+      throw new Error("Failed to fetch user data");
+    }
+  }
+
+  static async addUser(user) {
+    try {
+      const response = await axios.post(`${this.BASE_URL}/users`, user);
+      return response.data;
+    } catch (error) {
+      console.error("Error adding user:", error);
+      throw new Error("Failed to add user");
+    }
+  }
+
+  static async updateUser(id, updatedUser) {
+    try {
+      const response = await axios.put(
+        `${this.BASE_URL}/users/${id}`,
+        updatedUser
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error updating user:", error);
+      throw new Error("Failed to update user");
+    }
+  }
+
+  static async deleteUser(id) {
+    const response = await axios.delete(`${this.BASE_URL}/users/${id}`);
+    return response.data;
+  }
+
   /** PRODUCTS API */
   static async getProducts() {
-    const response = await axios.get(`${this.BASE_URL}/products`);
-    return response.data;
+    try {
+      const response = await axios.get(`${this.BASE_URL}/products`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw new Error("Failed to fetch products");
+    }
   }
 
   static async getProductById(id) {
@@ -66,110 +120,102 @@ class ApiService {
     return response.data;
   }
 
-  /** USERS API */
-  static async getUsers() {
-    const response = await axios.get(`${this.BASE_URL}/users`);
-    return response.data;
-  }
-
-  static async getUserById(id) {
-    const response = await axios.get(`${this.BASE_URL}/users/${id}`);
-    return response.data;
-  }
-
-  static async deleteUser(id) {
-    const response = await axios.delete(`${this.BASE_URL}/users/${id}`);
-    return response.data;
-  }
-
-  /** REGISTER USER */
-  static async registerUser(userData) {
+  /** PURCHASE API (Increase stock) */
+  static async purchaseProduct(productId, quantity) {
     try {
-      // Check if email already exists
-      const existingUsers = await axios.get(
-        `${this.BASE_URL}/users?email=${userData.email}`
+      const product = await this.getProductById(productId);
+
+      // Update stock for purchase (Increase stock)
+      const updatedProduct = {
+        ...product,
+        stockQuantity: product.stockQuantity + quantity,
+      };
+
+      // Update the product with new stock value
+      const response = await axios.put(
+        `${this.BASE_URL}/products/${productId}`,
+        updatedProduct
       );
-      if (existingUsers.data.length > 0) {
-        return {
-          success: false,
-          message: "Email already exists. Please use a different email.",
-        };
+
+      // Create a purchase transaction
+      const transaction = {
+        type: "purchase",
+        productId,
+        quantity,
+        totalPrice: product.price * quantity,
+        date: new Date().toISOString(),
+      };
+
+      await this.addTransaction(transaction);
+      return { success: true, updatedProduct };
+    } catch (error) {
+      console.error("Error purchasing product:", error);
+      return { success: false, message: error.message };
+    }
+  }
+
+  /** SALE API (Decrease stock) */
+  static async sellProduct(productId, quantity) {
+    try {
+      const product = await this.getProductById(productId);
+
+      // Check if there's enough stock to sell
+      if (product.stockQuantity < quantity) {
+        throw new Error("Not enough stock to sell");
       }
 
-      // Register new user
-      const response = await axios.post(`${this.BASE_URL}/users`, userData);
-      return {
-        success: true,
-        data: response.data,
-        message: "Registration successful!",
+      // Update stock for sale (Decrease stock)
+      const updatedProduct = {
+        ...product,
+        stockQuantity: product.stockQuantity - quantity,
       };
+
+      // Update the product with new stock value
+      const response = await axios.put(
+        `${this.BASE_URL}/products/${productId}`,
+        updatedProduct
+      );
+
+      // Create a sale transaction
+      const transaction = {
+        type: "sale",
+        productId,
+        quantity,
+        totalPrice: product.price * quantity,
+        date: new Date().toISOString(),
+      };
+
+      await this.addTransaction(transaction);
+      return { success: true, updatedProduct };
     } catch (error) {
-      return {
-        success: false,
-        message: "Registration failed. Please try again.",
-      };
+      console.error("Error selling product:", error);
+      return { success: false, message: error.message };
     }
   }
 
   /** TRANSACTIONS API */
   static async getTransactions() {
     const response = await axios.get(`${this.BASE_URL}/transactions`);
-    console.log("Transactions API Response:", response.data);
     return response.data;
-  }
-
-  static async getAllTransactions() {
-    return this.getTransactions();
   }
 
   static async addTransaction(transaction) {
-    const response = await axios.post(
-      `${this.BASE_URL}/transactions`,
-      transaction
-    );
-    return response.data;
-  }
-
-  static async getTransactionById(id) {
-    const response = await axios.get(`${this.BASE_URL}/transactions/${id}`);
-    return response.data;
-  }
-
-  /** CATEGORIES API */
-  static async getAllCategory() {
     try {
-      const response = await axios.get(`${this.BASE_URL}/categories`);
-      console.log("Categories API Response:", response.data);
+      const response = await axios.post(
+        `${this.BASE_URL}/transactions`,
+        transaction
+      );
       return response.data;
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      console.error("Error creating transaction:", error);
       throw error;
     }
-  }
-
-  static async createCategory(category) {
-    const response = await axios.post(`${this.BASE_URL}/categories`, category);
-    return response.data;
-  }
-
-  static async updateCategory(id, updatedCategory) {
-    const response = await axios.put(
-      `${this.BASE_URL}/categories/${id}`,
-      updatedCategory
-    );
-    return response.data;
-  }
-
-  static async deleteCategory(id) {
-    const response = await axios.delete(`${this.BASE_URL}/categories/${id}`);
-    return response.data;
   }
 
   /** SUPPLIERS API */
   static async getAllSuppliers() {
     try {
       const response = await axios.get(`${this.BASE_URL}/suppliers`);
-      console.log("Suppliers API Response:", response.data); // Debugging
       return response.data;
     } catch (error) {
       console.error("Error fetching suppliers:", error);
@@ -207,8 +253,41 @@ class ApiService {
 
   /** PROFILE - FETCH CURRENT USER INFO */
   static getLoggedInUserInfo() {
-    const user = this.getUser(); // Get the currently logged-in user from sessionStorage
-    return user ? user : null; // If no user, return null
+    const user = this.getUser();
+    return user ? user : null;
+  }
+
+  /** CATEGORY API */
+  static async createCategory(category) {
+    const response = await axios.post(`${this.BASE_URL}/categories`, category);
+    return response.data;
+  }
+
+  static async getAllCategory() {
+    const response = await axios.get(`${this.BASE_URL}/categories`);
+    return response.data;
+  }
+
+  static async getCategoryById(categoryId) {
+    const response = await axios.get(
+      `${this.BASE_URL}/categories/${categoryId}`
+    );
+    return response.data;
+  }
+
+  static async updateCategory(categoryId, categoryData) {
+    const response = await axios.put(
+      `${this.BASE_URL}/categories/${categoryId}`,
+      categoryData
+    );
+    return response.data;
+  }
+
+  static async deleteCategory(categoryId) {
+    const response = await axios.delete(
+      `${this.BASE_URL}/categories/${categoryId}`
+    );
+    return response.data;
   }
 }
 

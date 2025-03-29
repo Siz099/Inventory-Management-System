@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Use Routes instead of Switch in React Router v6+
 import { AuthGuard, AdminGuard } from "./service/Guard"; // Updated imports
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
@@ -14,14 +14,14 @@ import TransactionsPage from "./pages/TransactionsPage";
 import TransactionDetailsPage from "./pages/TransactionDetailsPage";
 import ProfilePage from "./pages/ProfilePage";
 import DashboardPage from "./pages/DashboardPage";
+import UserListPage from "./pages/UserListPage"; // Import UserListPage
+import AddEditUserPage from "./pages/AddEditUserPage"; // Import AddEditUserPage
 import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <>
       <Router>
-        {" "}
-        {/* Move Layout inside Router */}
         <Routes>
           {/* Public routes */}
           <Route path="/register" element={<RegisterPage />} />
@@ -82,6 +82,32 @@ function App() {
             element={
               <AdminGuard>
                 <AddEditProductPage />
+              </AdminGuard>
+            }
+          />
+
+          {/* User Management (Admin Routes) */}
+          <Route
+            path="/users"
+            element={
+              <AdminGuard>
+                <UserListPage />
+              </AdminGuard>
+            }
+          />
+          <Route
+            path="/add-user"
+            element={
+              <AdminGuard>
+                <AddEditUserPage />
+              </AdminGuard>
+            }
+          />
+          <Route
+            path="/edit-user/:userId"
+            element={
+              <AdminGuard>
+                <AddEditUserPage />
               </AdminGuard>
             }
           />

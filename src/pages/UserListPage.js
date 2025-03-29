@@ -16,8 +16,6 @@ import {
   PlusOutlined,
   EditOutlined,
   DeleteOutlined,
-  EnvironmentOutlined,
-  PhoneOutlined,
   InfoCircleOutlined,
 } from "@ant-design/icons";
 import Layout from "../component/Layouts";
@@ -26,42 +24,38 @@ import { useNavigate } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
-const SupplierPage = () => {
-  const [suppliers, setSuppliers] = useState([]);
+const UserListPage = () => {
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [deleteModal, setDeleteModal] = useState({
     visible: false,
-    supplierId: null,
+    userId: null,
   });
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchSuppliers = async () => {
+    const fetchUsers = async () => {
       setLoading(true);
       try {
-        const response = await ApiService.getAllSuppliers();
-        setSuppliers(response);
+        const response = await ApiService.getUsers(); // Adjust based on your API method
+        setUsers(response); // Assuming response is an array of users
       } catch (error) {
-        message.error(
-          error.response?.data?.message || "Error fetching suppliers"
-        );
+        message.error(error.response?.data?.message || "Error fetching users");
       }
       setLoading(false);
     };
-    fetchSuppliers();
+    fetchUsers();
   }, []);
 
   const handleDelete = async () => {
-    if (!deleteModal.supplierId) return;
+    if (!deleteModal.userId) return;
     try {
-      await ApiService.deleteSupplier(deleteModal.supplierId);
-      message.success("Supplier deleted successfully");
-      setSuppliers((prev) =>
-        prev.filter((sup) => sup.id !== deleteModal.supplierId)
-      );
-      setDeleteModal({ visible: false, supplierId: null });
+      await ApiService.deleteUser(deleteModal.userId); // Adjust the delete method
+      message.success("User deleted successfully");
+      setUsers((prev) => prev.filter((user) => user.id !== deleteModal.userId));
+      setDeleteModal({ visible: false, userId: null });
     } catch (error) {
-      message.error(error.response?.data?.message || "Error deleting supplier");
+      message.error(error.response?.data?.message || "Error deleting user");
     }
   };
 
@@ -74,42 +68,38 @@ const SupplierPage = () => {
           style={{ marginBottom: 24 }}
         >
           <Col>
-            <Title level={3}>Supplier Directory</Title>
-            <Text type="secondary">
-              Manage your suppliers and vendor relationships
-            </Text>
+            <Title level={3}>Users</Title>
+            <Text type="secondary">Manage your users and their accounts</Text>
           </Col>
           <Col>
             <Button
               type="primary"
               icon={<PlusOutlined />}
-              onClick={() => navigate("/add-supplier")}
+              onClick={() => navigate("/add-user")}
             >
-              Add Supplier
+              Add User
             </Button>
           </Col>
         </Row>
 
         <Spin spinning={loading}>
-          {suppliers.length > 0 ? (
+          {users.length > 0 ? (
             <Row gutter={[16, 16]}>
-              {suppliers.map((supplier) => (
-                <Col key={supplier.id} xs={24} sm={12} lg={8}>
+              {users.map((user) => (
+                <Col key={user.id} xs={24} sm={12} lg={8}>
                   <Card
                     hoverable
                     title={
                       <Space>
-                        <Text strong>{supplier.name}</Text>
-                        <Tag color="blue">ID: {supplier.id}</Tag>
+                        <Text strong>{user.name}</Text>
+                        <Tag color="blue">ID: {user.id}</Tag>
                       </Space>
                     }
                     extra={
                       <Button
                         type="text"
                         icon={<EditOutlined />}
-                        onClick={() =>
-                          navigate(`/edit-supplier/${supplier.id}`)
-                        }
+                        onClick={() => navigate(`/edit-user/${user.id}`)}
                       />
                     }
                     actions={[
@@ -119,7 +109,7 @@ const SupplierPage = () => {
                         onClick={() =>
                           setDeleteModal({
                             visible: true,
-                            supplierId: supplier.id,
+                            userId: user.id,
                           })
                         }
                       >
@@ -129,14 +119,15 @@ const SupplierPage = () => {
                   >
                     <Space direction="vertical" style={{ width: "100%" }}>
                       <div>
-                        <PhoneOutlined style={{ marginRight: 8 }} />
+                        <Text>Email: {user.email}</Text>
+                      </div>
+                      <div>
                         <Text>
-                          {supplier.contactInfo || "No contact information"}
+                          Phone: {user.phoneNumber || "No phone number"}
                         </Text>
                       </div>
                       <div>
-                        <EnvironmentOutlined style={{ marginRight: 8 }} />
-                        <Text>{supplier.address || "No address provided"}</Text>
+                        <Text>Role: {user.role || "No role assigned"}</Text>
                       </div>
                     </Space>
                   </Card>
@@ -148,41 +139,40 @@ const SupplierPage = () => {
               image={Empty.PRESENTED_IMAGE_SIMPLE}
               description={
                 <Space direction="vertical">
-                  <Text>No suppliers found</Text>
-                  <Text type="secondary">
-                    Start by adding your first supplier
-                  </Text>
+                  <Text>No users found</Text>
+                  <Text type="secondary">Start by adding your first user</Text>
                 </Space>
               }
             >
               <Button
                 type="primary"
                 icon={<PlusOutlined />}
-                onClick={() => navigate("/add-supplier")}
+                onClick={() => navigate("/add-user")}
               >
-                Add New Supplier
+                Add New User
               </Button>
             </Empty>
           )}
         </Spin>
 
+        {/* Delete Confirmation Modal */}
         <Modal
           title={
             <Space>
               <InfoCircleOutlined style={{ color: "#ff4d4f" }} />
-              Confirm Supplier Deletion
+              Confirm User Deletion
             </Space>
           }
           visible={deleteModal.visible}
           onOk={handleDelete}
-          onCancel={() => setDeleteModal({ visible: false, supplierId: null })}
+          onCancel={() => setDeleteModal({ visible: false, userId: null })}
           okText="Delete"
           okButtonProps={{ danger: true }}
           cancelButtonProps={{ type: "text" }}
           centered
         >
           <Space direction="vertical">
-            <Text>Are you sure you want to delete this supplier?</Text>
+            <Text>Are you sure you want to delete this user?</Text>
             <Text type="secondary">This action cannot be undone.</Text>
           </Space>
         </Modal>
@@ -191,4 +181,4 @@ const SupplierPage = () => {
   );
 };
 
-export default SupplierPage;
+export default UserListPage;
