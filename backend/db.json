@@ -17,7 +17,7 @@
       "role": "user"
     },
     {
-      "id": "265d",
+      "id": "3",
       "name": "siz",
       "email": "siz@gmail.com",
       "password": "siz@09",
@@ -25,15 +25,15 @@
       "role": "user"
     },
     {
-      "id": "e902",
+      "id": "4",
       "name": "siz",
       "email": "sizmhrzn@gmail.com",
+      "phoneNumber": "9844296224",
       "password": "siz@09",
-      "phoneNumber": "9999999999",
-      "role": "user"
+      "role": "admin"
     },
     {
-      "id": "0ac0",
+      "id": "5",
       "name": "siz",
       "email": "sizmhrzn09@gmail.com",
       "password": "siz@09",
@@ -41,37 +41,40 @@
       "role": "user"
     },
     {
-      "id": "c1fc",
+      "id": "6",
       "name": "hello",
       "email": "heloo@gmail.com",
       "password": "heloo",
       "phoneNumber": "hello",
       "role": "user"
+    },
+    {
+      "id": "fbcb",
+      "name": "Nobody",
+      "email": "sijan@gmail.com",
+      "phoneNumber": "9844296224",
+      "password": "hello",
+      "role": "user"
     }
   ],
   "products": [
     {
-      "id": "1",
+      "id": "ec0e",
+      "name": "ice",
+      "sku": "434",
+      "categoryId": "5b9a",
+      "price": 88,
+      "stockQuantity": 1500,
+      "description": "ice"
+    },
+    {
+      "id": "40fb",
       "name": "Laptop",
-      "price": 1200,
-      "quantity": 10,
-      "categoryId": 1
-    },
-    {
-      "id": "2",
-      "name": "Mouse",
-      "price": 25,
-      "quantity": 50,
-      "categoryId": 2
-    },
-    {
-      "id": "afbd",
-      "name": "hello",
-      "sku": "1999",
-      "price": "190000",
-      "stockQuantity": "19",
-      "categoryId": null,
-      "description": "hello"
+      "sku": "4346",
+      "categoryId": "6464",
+      "price": 1000,
+      "stockQuantity": 9000,
+      "description": "Gamin Laptop"
     }
   ],
   "categories": [
@@ -82,6 +85,10 @@
     {
       "id": "5b9a",
       "name": "Hello"
+    },
+    {
+      "id": "6464",
+      "name": "Gaming"
     }
   ],
   "suppliers": [
@@ -96,18 +103,6 @@
       "name": "Gadget Distributors",
       "email": "sales@gadgetdist.com",
       "phoneNumber": "5559876543"
-    },
-    {
-      "id": "deb6",
-      "name": "hello",
-      "contactInfo": "8989898989",
-      "address": "hello"
-    },
-    {
-      "id": "5973",
-      "name": "hello",
-      "contactInfo": "999999999",
-      "address": "hello"
     }
   ],
   "transactions": [
@@ -128,6 +123,177 @@
       "quantity": 3,
       "date": "2025-03-24",
       "totalPrice": 75
+    },
+    {
+      "id": "5b6a",
+      "productId": 1,
+      "quantity": 2,
+      "description": "grate",
+      "note": "",
+      "type": "sale",
+      "date": "2025-03-29T07:40:54.495Z",
+      "price": 999.99,
+      "total": 1999.98
+    },
+    {
+      "id": "b5f9",
+      "productId": "ec0e",
+      "quantity": 10,
+      "description": "yrjryj",
+      "note": "",
+      "type": "sale",
+      "date": "2025-03-29T09:02:26.637Z",
+      "price": 88,
+      "total": 880,
+      "productName": "ice"
+    },
+    {
+      "id": "d599",
+      "productId": "ec0e",
+      "quantity": 100,
+      "description": "dfgdfg",
+      "note": "",
+      "type": "sale",
+      "date": "2025-03-29T09:02:50.306Z",
+      "price": 88,
+      "total": 8800,
+      "productName": "ice"
+    },
+    {
+      "id": "ec66",
+      "productId": "ec0e",
+      "quantity": 100,
+      "description": "khjkhjk",
+      "note": "",
+      "type": "sale",
+      "date": "2025-03-29T09:04:45.639Z",
+      "price": 88,
+      "total": 8800,
+      "productName": "ice"
+    },
+    {
+      "id": "3b4f",
+      "productId": "ec0e",
+      "quantity": 1000,
+      "description": "opopo",
+      "note": "",
+      "type": "sale",
+      "date": "2025-03-29T09:07:48.924Z",
+      "price": 88,
+      "total": 88000,
+      "productName": "ice"
+    },
+    {
+      "id": "4e5f",
+      "productId": "ec0e",
+      "quantity": 10000,
+      "description": "yuikyi",
+      "note": "",
+      "type": "sale",
+      "date": "2025-03-29T09:08:10.659Z",
+      "price": 88,
+      "total": 880000,
+      "productName": "ice"
+    },
+    {
+      "id": "da75",
+      "productId": "ec0e",
+      "quantity": 10000,
+      "description": "hello",
+      "note": "",
+      "type": "sale",
+      "date": "2025-03-29T09:10:03.631Z",
+      "price": 88,
+      "total": 880000,
+      "productName": "ice"
+    },
+    {
+      "id": "9ef8",
+      "type": "sale",
+      "productId": "ec0e",
+      "quantity": 100,
+      "totalPrice": 8800,
+      "date": "2025-03-29T09:12:52.302Z"
+    },
+    {
+      "id": "3fbb",
+      "type": "sale",
+      "productId": "ec0e",
+      "quantity": 20000,
+      "totalPrice": 1760000,
+      "date": "2025-03-29T09:13:08.568Z"
+    },
+    {
+      "id": "52c7",
+      "type": "sale",
+      "productId": "ec0e",
+      "quantity": 80,
+      "totalPrice": 7040,
+      "date": "2025-03-29T09:25:29.021Z"
+    },
+    {
+      "id": "08f1",
+      "type": "sale",
+      "productId": "ec0e",
+      "quantity": 100,
+      "totalPrice": 8800,
+      "date": "2025-03-29T09:25:49.361Z"
+    },
+    {
+      "id": "ad10",
+      "type": "sale",
+      "productId": "ec0e",
+      "quantity": 100,
+      "totalPrice": 8800,
+      "date": "2025-03-29T09:31:49.954Z"
+    },
+    {
+      "id": "d587",
+      "type": "sale",
+      "productId": "40fb",
+      "quantity": 10,
+      "totalPrice": 10000,
+      "date": "2025-03-29T09:34:31.999Z"
+    },
+    {
+      "id": "304b",
+      "type": "purchase",
+      "productId": "ec0e",
+      "quantity": 1000,
+      "totalPrice": 88000,
+      "date": "2025-03-29T09:59:53.662Z"
+    },
+    {
+      "id": "376f",
+      "type": "purchase",
+      "productId": "40fb",
+      "quantity": 10,
+      "totalPrice": 10000,
+      "date": "2025-03-29T10:06:32.055Z"
+    },
+    {
+      "id": "7a24",
+      "type": "sale",
+      "productId": "40fb",
+      "quantity": 1000,
+      "totalPrice": 1000000,
+      "date": "2025-03-29T11:02:33.535Z"
+    },
+    {
+      "id": "a7e2",
+      "type": "sale",
+      "productId": "40fb",
+      "quantity": 1000,
+      "totalPrice": 1000000,
+      "date": "2025-03-29T12:56:52.613Z"
+    },
+    {
+      "id": "dec6",
+      "type": "purchase",
+      "productId": "40fb",
+      "quantity": 1000,
+      "totalPrice": 1000000,
+      "date": "2025-03-29T12:57:11.187Z"
     }
   ]
 }
